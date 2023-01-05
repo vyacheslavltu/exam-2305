@@ -3,20 +3,20 @@ import Home from "../../Contexts/Home";
 import DataContext from "../../Contexts/DataContext";
 
 const Create = () => {
-  const [municipality, setMunicipality] = useState(0);
-  const [service, setService] = useState(0);
+  const [city, setCity] = useState(0);
+  const [event, setEvent] = useState(0);
   const [post, setPost] = useState("");
 
-  const { setCreateData, municipalities, services } = useContext(Home);
+  const { setCreateData, cities, events } = useContext(Home);
   const { makeMsg } = useContext(DataContext);
 
   const addComment = () => {
-    if (municipality === 0) {
-      makeMsg("Please choose a municipality.");
+    if (city === 0) {
+      makeMsg("Please choose a city.");
       return;
     }
-    if (service === 0) {
-      makeMsg("Please choose a service.");
+    if (event === 0) {
+      makeMsg("Please choose a event.");
       return;
     }
     if (post.length === 0) {
@@ -24,12 +24,12 @@ const Create = () => {
       return;
     }
     setCreateData({
-      mun_id: municipality,
-      service_id: service,
+      mun_id: city,
+      service_id: event,
       post,
     });
-    setMunicipality("");
-    setService("");
+    setCity("");
+    setEvent("");
     setPost("");
   };
 
@@ -38,17 +38,17 @@ const Create = () => {
       <h5 className="card-header">Add a comment</h5>
       <div className="card-body">
         <div className="mb-3">
-          <label className="form-label">Municipality</label>
+          <label className="form-label">city</label>
           <select
             className="form-select"
-            value={municipality}
-            onChange={(e) => setMunicipality(e.target.value)}
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
           >
             <option value={0} disabled>
               Choose from list
             </option>
 
-            {municipalities?.map((m) => (
+            {cities?.map((m) => (
               <option key={m.id} value={m.id}>
                 {m.title}
               </option>
@@ -56,17 +56,17 @@ const Create = () => {
           </select>
         </div>
         <div className="mb-3">
-          <label className="form-label">Service</label>
+          <label className="form-label">event</label>
           <select
             className="form-select"
-            value={service}
-            onChange={(e) => setService(e.target.value)}
+            value={event}
+            onChange={(e) => setEvent(e.target.value)}
           >
             <option value={0} disabled>
               Choose from list
             </option>
 
-            {services?.map((s) => (
+            {events?.map((s) => (
               <option key={s.id} value={s.id}>
                 {s.title}
               </option>

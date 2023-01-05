@@ -1,18 +1,18 @@
 import { useContext } from 'react';
-import Services from "../../Contexts/Services";
+import Events from "../../Contexts/Events";
 import Line from './Line';
 
 function List() {
 
-    const { services } = useContext(Services);
+    const { events } = useContext(Events);
 
     return (
         <div className="card m-4">
-            <h5 className="card-header">Services List</h5>
+            <h5 className="card-header">Events List</h5>
             <div className="card-body">
                 <ul className="list-group">
                     {
-                        services?.map(s => <Line key={s.id} service={s} />)
+                        events?.map(s => <Line key={s.id} service={s} />)
                     }
                 </ul>
             </div>

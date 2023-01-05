@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Services from '../../Contexts/Services';
+import Events from '../../Contexts/Events';
 import DataContext from '../../Contexts/DataContext';
 import { useContext } from 'react';
 import Create from './Create';
@@ -9,7 +9,7 @@ import Edit from './Edit';
 import { authConfig } from '../../Functions/auth';
 
 function Main() {
-    const [services, setServices] = useState(null);
+    const [events, setEvents] = useState(null);
     const [createData, setCreateData] = useState(null);
     const [deleteData, setDeleteData] = useState(null);
     const [modalData, setModalData] = useState(null);
@@ -24,7 +24,7 @@ function Main() {
         if (null === createData) {
             return;
         }
-        axios.post('http://localhost:3003/server/services', createData, authConfig())
+        axios.post('http://localhost:3003/server/events', createData, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
                 makeMsg(res.data.text, res.data.type);
@@ -33,9 +33,9 @@ function Main() {
 
     // READ for list
     useEffect(() => {
-        axios.get('http://localhost:3003/server/services', authConfig())
+        axios.get('http://localhost:3003/server/events', authConfig())
             .then(res => {
-                setServices(res.data);
+                setEvents(res.data);
             })
     }, [lastUpdate]);
     
@@ -44,7 +44,7 @@ function Main() {
         if (null === editData) {
             return;
         }
-        axios.put('http://localhost:3003/server/services/' + editData.id, editData, authConfig())
+        axios.put('http://localhost:3003/server/events/' + editData.id, editData, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
                 makeMsg(res.data.text, res.data.type);
@@ -56,7 +56,7 @@ function Main() {
         if (null === deleteData) {
             return;
         }
-        axios.delete('http://localhost:3003/server/services/' + deleteData.id, authConfig())
+        axios.delete('http://localhost:3003/server/events/' + deleteData.id, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
                 makeMsg(res.data.text, res.data.type);
@@ -67,9 +67,9 @@ function Main() {
 
 
     return (
-        <Services.Provider value={{
+        <Events.Provider value={{
             setCreateData,
-            services,
+            events,
             setDeleteData,
             modalData,
             setModalData,
@@ -87,7 +87,7 @@ function Main() {
                 </div>
             </div>
             <Edit />
-        </Services.Provider>
+        </Events.Provider>
     )
 }
 

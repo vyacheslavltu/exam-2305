@@ -1,6 +1,6 @@
 import { useState, useContext, useRef } from 'react';
 import DataContext from '../../Contexts/DataContext';
-import Municipalities from '../../Contexts/Municipalities';
+import Cities from '../../Contexts/Cities';
 import getBase64 from '../../Functions/getBase64';
 
 function Create() {
@@ -9,7 +9,7 @@ function Create() {
     const [photoPrint, setPhotoPrint] = useState(null);
     const fileInput = useRef();
 
-    const { setCreateData } = useContext(Municipalities);
+    const { setCreateData } = useContext(Cities);
     const {makeMsg} = useContext(DataContext);
 
     
@@ -39,14 +39,14 @@ function Create() {
 
     return (
         <div className="mx-auto card m-4 col-lg-4 col-md-12">
-            <h5 className="card-header">New Municipality</h5>
+            <h5 className="card-header">New City</h5>
             <div className="card-body">
                 <div className="mb-3">
-                    <label className="form-label">Municipality title</label>
+                    <label className="form-label">City title</label>
                     <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Municipality Shield Image</label>
+                    <label className="form-label">City Shield Image</label>
                     <input ref={fileInput} type="file" className="form-control" onChange={doPhoto} />
                 </div>
                 {photoPrint ? <div className='img-bin'><img src={photoPrint} alt="upload"></img></div> : null}

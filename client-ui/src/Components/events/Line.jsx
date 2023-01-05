@@ -1,21 +1,21 @@
 import { useContext } from 'react';
-import Services from '../../Contexts/Services';
+import Events from '../../Contexts/Events';
 
-function Line({ service }) {
+function Line({ event }) {
 
-    const { setDeleteData, setModalData } = useContext(Services);
+    const { setDeleteData, setModalData } = useContext(Events);
 
     return (
         <li className="list-group-item">
             <div className="line">
                 <div className="line__content">
                     <div className="line__content__title">
-                        <h1>{service.title}</h1>
+                        <h1>{event.title}</h1>
                     </div>
                 </div>
                 <div className="line__buttons">
-                    <button onClick={() => setModalData(service)} type="button" className="btn btn-outline-success">Edit</button>
-                    <button onClick={() => setDeleteData(service)} type="button" className="btn btn-outline-danger">Delete</button>
+                    <button onClick={() => setModalData(event)} type="button" className="btn btn-outline-success">Edit</button>
+                    <button onClick={() => setDeleteData(event)} type="button" className="btn btn-outline-danger">Delete</button>
                 </div>
             </div>
         </li>

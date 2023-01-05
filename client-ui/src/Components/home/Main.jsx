@@ -10,8 +10,8 @@ import DataContext from "../../Contexts/DataContext";
 const Main = () => {
 
         const [lastUpdate, setLastUpdate] = useState(Date.now());
-        const [municipalities, setMunicipalities] = useState(null);
-        const [services, setServices] = useState(null);
+        const [cities, setCities] = useState(null);
+        const [events, setEvents] = useState(null);
         const [comments, setComments] = useState(null);
         const [createData, setCreateData] = useState(null);
         const { makeMsg } = useContext(DataContext);
@@ -22,16 +22,16 @@ const Main = () => {
 
                 // READ for list
         useEffect(() => {
-            axios.get('http://localhost:3003/home/municipalities', authConfig())
+            axios.get('http://localhost:3003/home/cities', authConfig())
                 .then(res => {
-                    setMunicipalities(res.data)
+                    setCities(res.data)
                 });
             }, [])
 
         useEffect(() => {
-            axios.get('http://localhost:3003/home/services', authConfig())
+            axios.get('http://localhost:3003/home/events', authConfig())
                 .then(res => {
-                    setServices(res.data)
+                    setEvents(res.data)
                 }, [])
 
                 axios.get('http://localhost:3003/home/comments', authConfig())
@@ -59,8 +59,8 @@ const Main = () => {
       return (
         <Home.Provider value={{
             comments,
-            municipalities,
-            services, 
+            cities,
+            events, 
             setComments,
             setCreateData,
             createData, 

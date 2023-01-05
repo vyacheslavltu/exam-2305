@@ -5,14 +5,14 @@ import Home from "../../Contexts/Home";
 import Line from "./Line";
 
 const List = () => {
-  const [municipalityId, setMunicipalityId] = useState(0);
-  const [serviceId, setServiceId] = useState(0);
+  const [cityId, setCityId] = useState(0);
+  const [eventId, setEventId] = useState(0);
 
   const {
     comments,
     setComments,
-    municipalities,
-    services,
+    cities,
+    events,
     filterOn,
     filterWhat,
   } = useContext(Home);
@@ -20,18 +20,18 @@ const List = () => {
   useEffect(() => {
     setComments((prevCom) =>
       prevCom?.map((c) =>
-        (Number(c.sid) === Number(serviceId) || Number(serviceId) === 0) &&
-        (Number(c.mid) === Number(municipalityId) ||
-          Number(municipalityId) === 0)
+        (Number(c.sid) === Number(eventId) || Number(eventId) === 0) &&
+        (Number(c.mid) === Number(cityId) ||
+          Number(cityId) === 0)
           ? { ...c, show: true }
           : { ...c, show: false }
       )
     );
-  }, [serviceId, municipalityId, setComments]);
+  }, [eventId, cityId, setComments]);
 
   const resetFilter = () => {
-    setMunicipalityId("");
-    setServiceId("");
+    setCityId("");
+    setEventId("");
     setComments((prevCom) => prevCom.map((c) => ({ ...c, show: true })));
     filterOn.current = false;
     filterWhat.current = null;
@@ -43,14 +43,14 @@ const List = () => {
         <h5 className="card-header">Filter Comments</h5>
         <div className="card-body">
           <div className="mb-3">
-            <label className="form-label">By municipality</label>
+            <label className="form-label">By city</label>
             <select
               className="form-select"
-              value={municipalityId}
-              onChange={(e) => setMunicipalityId(e.target.value)}
+              value={cityId}
+              onChange={(e) => setCityId(e.target.value)}
             >
-              <option value={0}>All municipalities</option>
-              {municipalities?.map((m) => (
+              <option value={0}>All cities</option>
+              {cities?.map((m) => (
                 <option key={m.id} value={m.id}>
                   {m.title}
                 </option>
@@ -58,14 +58,14 @@ const List = () => {
             </select>
           </div>
           <div className="mb-3">
-            <label className="form-label">By a type of service</label>
+            <label className="form-label">By a type of event</label>
             <select
               className="form-select"
-              value={serviceId}
-              onChange={(e) => setServiceId(e.target.value)}
+              value={eventId}
+              onChange={(e) => setEventId(e.target.value)}
             >
-              <option value={0}>All services</option>
-              {services?.map((s) => (
+              <option value={0}>All events</option>
+              {events?.map((s) => (
                 <option key={s.id} value={s.id}>
                   {s.title}
                 </option>

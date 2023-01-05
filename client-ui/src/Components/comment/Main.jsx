@@ -36,7 +36,7 @@ function Main() {
       }, [comment, makeMsg]);
 
 
-// DELETE comment
+    // DELETE comment
     useEffect(() => {
         if (deleteData === null) {
             return;

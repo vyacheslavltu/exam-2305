@@ -136,8 +136,9 @@ app.post("/register", (req, res) => {
 
 
 /////////////////////////////////
+// ** CITY
 
-//CREATE MUNICIPALITY
+// CREATE CITY
 app.post("/server/cities", (req, res) => {
     const sql = `
     INSERT INTO cities (title, image)
@@ -149,33 +150,7 @@ app.post("/server/cities", (req, res) => {
     });
 });
 
-//CREATE SERVICE
-app.post("/server/events", (req, res) => {
-    const sql = `
-    INSERT INTO/events (title)
-    VALUES (?)
-    `;
-    con.query(sql, [req.body.title], (err, result) => {
-        if (err) throw err;
-        res.send({ msg: 'OK', text: 'A new event has been added.', type: 'success' });
-    });
-});
-
-//CREATE COMMENT
-app.post("/home/comments", (req, res) => {
-    const sql = `
-    INSERT INTO comments (post, mun_id, service_id)
-    VALUES (?, ?, ?)
-    `;
-    con.query(sql, [req.body.post, req.body.mun_id, req.body.service_id], (err, result) => {
-        if (err) throw err;
-        res.send({ msg: 'OK', text: 'Thanks for the post. It will be approved soon.', type: 'info' });
-    });
-});
-
-
-
-// READ MUNICIPALITY for admin
+// READ CITY for admin
 app.get("/server/cities", (req, res) => {
     const sql = `
     SELECT *
@@ -188,7 +163,7 @@ app.get("/server/cities", (req, res) => {
     });
 });
 
-// READ MUNICIPALITY for home
+// READ CITY for home
 app.get("/home/cities", (req, res) => {
     const sql = `
     SELECT *
@@ -200,68 +175,6 @@ app.get("/home/cities", (req, res) => {
         res.send(result);
     });
 });
-
-// READ SERVICE for admin
-app.get("/server/events", (req, res) => {
-    const sql = `
-    SELECT *
-    FROM/events
-    ORDER BY id DESC
-    `;
-    con.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-// READ SERVICE for home
-app.get("/home/events", (req, res) => {
-    const sql = `
-    SELECT *
-    FROM/events
-    ORDER BY id DESC
-    `;
-    con.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-// READ COMMENTS for home
-app.get("/home/comments", (req, res) => {
-    const sql = `
-    SELECT c.*, m.title AS municipalityTitle, mun_id AS mid, m.image AS municipalityImage, s.title AS serviceTitle, s.id AS sid
-    FROM comments AS c
-    INNER JOIN cities AS m 
-    ON c.mun_id = m.id
-    INNER JOIN/events AS s
-    ON c.service_id = s.id
-    WHERE c.status = 1
-    `;
-    con.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send(result);
-    });
-});
-
-// READ COMMENTS for admin
-
-app.get("/server/comments", (req, res) => {
-    const sql = `
-    SELECT  m.title AS municipalityTitle, mun_id AS mid, s.title AS serviceTitle, c.post, c.status, c.id as comment_id
-    FROM comments AS c
-    INNER JOIN cities AS m
-    ON c.mun_id = m.id
-    INNER JOIN/events AS s
-    ON c.service_id = s.id
-    `;
-    con.query(sql, (err, result) => {
-      if (err) throw err;
-      res.send(result);
-    });
-  });
-
-
 
 // DELETE CITY
 app.delete("/server/cities/:id", (req, res) => {
@@ -275,32 +188,7 @@ app.delete("/server/cities/:id", (req, res) => {
     });
 });
 
-// DELETE EVENT
-app.delete("/server/events/:id", (req, res) => {
-    const sql = `
-    DELETE FROM/events
-    WHERE id = ?
-    `;
-    con.query(sql, [req.params.id], (err, result) => {
-        if (err) throw err;
-        res.send({ msg: 'OK', text: 'The event has been deleted.', type: 'info' });
-    });
-});
-
-//DELETE comments
-app.delete("/server/comments/:id", (req, res) => {
-    const sql = `
-    DELETE FROM comments
-    WHERE id = ?
-    `;
-    con.query(sql, [req.params.id], (err, result) => {
-        if (err) throw err;
-        res.send({ msg: 'OK', text: 'Unappropriate comment has been deleted.', type: 'info' });
-    });
-});
-
-
-//UPDATE MUNICIPALITY
+// UPDATE CITY
 app.put("/server/cities/:id", (req, res) => {
     let sql;
     let r;
@@ -335,10 +223,63 @@ app.put("/server/cities/:id", (req, res) => {
     });
 });
 
-//UPDATE/events
+/////////////////////////////////
+// ** EVENTS
+
+// CREATE EVENT
+app.post("/server/events", (req, res) => {
+    const sql = `
+    INSERT INTO events (title)
+    VALUES (?)
+    `;
+    con.query(sql, [req.body.title], (err, result) => {
+        if (err) throw err;
+        res.send({ msg: 'OK', text: 'A new event has been added.', type: 'success' });
+    });
+});
+
+// READ EVENT for admin
+app.get("/server/events", (req, res) => {
+    const sql = `
+    SELECT *
+    FROM events
+    ORDER BY id DESC
+    `;
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// READ EVENT for home
+app.get("/home/events", (req, res) => {
+    const sql = `
+    SELECT *
+    FROM events
+    ORDER BY id DESC
+    `;
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// DELETE EVENT
+app.delete("/server/events/:id", (req, res) => {
+    const sql = `
+    DELETE FROM events
+    WHERE id = ?
+    `;
+    con.query(sql, [req.params.id], (err, result) => {
+        if (err) throw err;
+        res.send({ msg: 'OK', text: 'The event has been deleted.', type: 'info' });
+    });
+});
+
+// UPDATE EVENT
 app.put("/server/events/:id", (req, res) => {
     const sql = `
-      UPDATE/events
+      UPDATE events
       SET title = ?
       WHERE id = ?
       `;
@@ -348,8 +289,68 @@ app.put("/server/events/:id", (req, res) => {
     });
   });
 
-  // UPDATE COMMENTS for admin
 
+/////////////////////////////////
+// ** COMMENTS
+
+// CREATE COMMENT
+app.post("/home/comments", (req, res) => {
+    const sql = `
+    INSERT INTO comments (post, mun_id, service_id)
+    VALUES (?, ?, ?)
+    `;
+    con.query(sql, [req.body.post, req.body.mun_id, req.body.service_id], (err, result) => {
+        if (err) throw err;
+        res.send({ msg: 'OK', text: 'Thanks for the post. It will be approved soon.', type: 'info' });
+    });
+});
+
+// READ COMMENTS for home
+app.get("/home/comments", (req, res) => {
+    const sql = `
+    SELECT c.*, m.title AS municipalityTitle, mun_id AS mid, m.image AS municipalityImage, s.title AS serviceTitle, s.id AS sid
+    FROM comments AS c
+    INNER JOIN cities AS m 
+    ON c.mun_id = m.id
+    INNER JOIN/events AS s
+    ON c.service_id = s.id
+    WHERE c.status = 1
+    `;
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
+// READ COMMENTS for admin
+app.get("/server/comments", (req, res) => {
+    const sql = `
+    SELECT  m.title AS municipalityTitle, mun_id AS mid, s.title AS serviceTitle, c.post, c.status, c.id as comment_id
+    FROM comments AS c
+    INNER JOIN cities AS m
+    ON c.mun_id = m.id
+    INNER JOIN/events AS s
+    ON c.service_id = s.id
+    `;
+    con.query(sql, (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    });
+  });
+
+// DELETE comments
+app.delete("/server/comments/:id", (req, res) => {
+    const sql = `
+    DELETE FROM comments
+    WHERE id = ?
+    `;
+    con.query(sql, [req.params.id], (err, result) => {
+        if (err) throw err;
+        res.send({ msg: 'OK', text: 'Unappropriate comment has been deleted.', type: 'info' });
+    });
+});
+
+// UPDATE COMMENTS for admin
 app.put("/server/comments/:id", (req, res) => {
     const sql = `
       UPDATE comments

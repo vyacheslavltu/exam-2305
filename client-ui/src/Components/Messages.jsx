@@ -19,7 +19,7 @@ function Messages() {
             msgs.map(m => 
             <div key={m.id} className={'toast show ' + m.class} role="alert">
                 <div className="toast-header">
-                    <strong className="me-auto">Municipalities Services</strong>
+                    <strong className="me-auto">Local Event Service</strong>
                     <button onClick={() => closeMsg(m.id)} type="button" className="btn-close"></button>
                 </div>
                 <div className="toast-body">

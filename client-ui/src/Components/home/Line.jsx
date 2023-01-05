@@ -5,7 +5,7 @@ import Home from '../../Contexts/Home';
 const Line = ({ comment }) => {
     const { filterWhat, filterOn, setComments } = useContext(Home);
   
-    const filterByMunicipality = () => {
+    const filterByCity = () => {
       filterOn.current = !filterOn.current;
       if (!filterOn.current) {
         setComments((prevCom) => prevCom.map((c) => ({ ...c, show: true })));
@@ -13,28 +13,28 @@ const Line = ({ comment }) => {
       } else {
         setComments((prevCom) => [
           ...prevCom.map((c) =>
-            c.municipalityTitle === comment.municipalityTitle
+            c.cityTitle === comment.cityTitle
               ? { ...c, show: true }
               : { ...c, show: false }
           ),
         ]);
-        filterWhat.current = comment.municipalityTitle;
+        filterWhat.current = comment.cityTitle;
       }
     };
   
-    const filterByService = () => {
+    const filterByEvents = () => {
       if (!filterOn.current) {
         setComments((prevCom) => prevCom.map((c) => ({ ...c, show: true })));
         filterWhat.current = null;
       } else {
         setComments((prevCom) =>
           prevCom.map((c) =>
-            c.serviceTitle === comment.serviceTitle
+            c.eventTitle === comment.eventTitle
               ? { ...c, show: true }
               : { ...c, show: false }
           )
         );
-        filterWhat.current = comment.serviceTitle;
+        filterWhat.current = comment.eventTitle;
       }
       filterOn.current = !filterOn.current;
     };
@@ -46,24 +46,24 @@ const Line = ({ comment }) => {
             <div className="line__content__info">
               <div
                 className="line__content__info"
-                onClick={filterByMunicipality}
+                onClick={filterByCity}
               >
                 <div className="img-bin">
                 <img
                   className="line__content_info"
-                  src={comment.municipalityImage}
-                  alt={comment.municipalityTitle}
+                  src={comment.cityImage}
+                  alt={comment.cityTitle}
                 ></img>
                 </div>
                 <div className="line__content__title">
-                  {comment.municipalityTitle}
+                  {comment.cityTitle}
                 </div>
               </div>
               <div
                 className="line__content__info click-link"
-                onClick={filterByService}
+                onClick={filterByEvents}
               >
-                {comment.serviceTitle}
+                {comment.eventTitle}
               </div>
             </div>
             <div className="line__content__info">{comment.post}</div>

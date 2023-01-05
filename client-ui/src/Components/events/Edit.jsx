@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import Services from '../../Contexts/Services';
+import Events from '../../Contexts/Events';
 
 
 function Edit() {
@@ -9,7 +9,7 @@ function Edit() {
 
     
 
-    const { setEditData, modalData, setModalData } = useContext(Services);
+    const { setEditData, modalData, setModalData } = useContext(Events);
 
     const edit = () => {
         setEditData({
@@ -36,14 +36,14 @@ function Edit() {
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">Edit Service</h5>
+                        <h5 className="modal-title">Edit Event</h5>
                         <button onClick={() => setModalData(null)} type="button" className="btn-close"></button>
                     </div>
                     <div className="modal-body"></div>
                     <div className="card m-4">
                         <div className="card-body">
                             <div className="mb-3">
-                                <label className="form-label">Service Title</label>
+                                <label className="form-label">Event Title</label>
                                 <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} />
                             </div>
                             <button onClick={edit} type="button" className="btn btn-outline-success">Save</button>

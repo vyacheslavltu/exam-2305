@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useRef } from 'react';
-import Municipalities from '../../Contexts/Municipalities';
+import Cities from '../../Contexts/Cities';
 import getBase64 from '../../Functions/getBase64';
 
 function Edit() {
@@ -17,7 +17,7 @@ function Edit() {
             })
     }
 
-    const { setEditData, modalData, setModalData } = useContext(Municipalities);
+    const { setEditData, modalData, setModalData } = useContext(Cities);
 
     const edit = () => {
         setEditData({
@@ -49,18 +49,18 @@ function Edit() {
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">Edit Municipality</h5>
+                        <h5 className="modal-title">Edit City</h5>
                         <button onClick={() => setModalData(null)} type="button" className="btn-close"></button>
                     </div>
                     <div className="modal-body"></div>
                     <div className="card m-4">
                         <div className="card-body">
                             <div className="mb-3">
-                                <label className="form-label">Municipality Title</label>
+                                <label className="form-label">City Title</label>
                                 <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} />
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Municipality Image</label>
+                                <label className="form-label">City Image</label>
                                 <input ref={fileInput} type="file" className="form-control" onChange={doPhoto} />
                             </div>
                             {photoPrint ? <div className='img-bin'>
